@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Math Scratch Android</string>
+    <string name="start_button">Begin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start_new">New</string>
+    <string name="brush">Brush</string>
+    <string name="erase">Erase</string>
+    <string name="save">Save</string>
+    <string name="paint">Paint</string>
+</resources>
