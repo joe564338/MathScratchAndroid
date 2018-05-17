@@ -37,7 +37,7 @@ public class ScratchFragment extends Fragment implements OnClickListener {
     private static final String ARG_PARAM2 = "param2";
     private float smallBrush, mediumBrush, largeBrush;
     private DrawingView drawView;
-    private ImageButton currPaint, drawBtn;
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -218,10 +218,13 @@ public class ScratchFragment extends Fragment implements OnClickListener {
         });
         drawBtn = (ImageButton) view.findViewById(R.id.draw_btn);
         drawBtn.setOnClickListener(this);
-
+        eraseBtn = (ImageButton) view.findViewById(R.id.erase_btn);
+        eraseBtn.setOnClickListener(this);
 
     }
     public void paintClicked(View view){
+        drawView.setErase(false);
+        drawView.setBrushSize(drawView.getLastBrushSize());
         if(view!=currPaint){
             //update color
             ImageButton imgView = (ImageButton)view;
@@ -247,6 +250,7 @@ public class ScratchFragment extends Fragment implements OnClickListener {
                 public void onClick(View v) {
                     drawView.setBrushSize(smallBrush);
                     drawView.setLastBrushSize(smallBrush);
+                    drawView.setErase(false);
                     brushDialog.dismiss();
                 }
             });
@@ -256,6 +260,7 @@ public class ScratchFragment extends Fragment implements OnClickListener {
                 public void onClick(View v) {
                     drawView.setBrushSize(mediumBrush);
                     drawView.setLastBrushSize(mediumBrush);
+                    drawView.setErase(false);
                     brushDialog.dismiss();
                 }
             });
@@ -266,11 +271,45 @@ public class ScratchFragment extends Fragment implements OnClickListener {
                 public void onClick(View v) {
                     drawView.setBrushSize(largeBrush);
                     drawView.setLastBrushSize(largeBrush);
+                    drawView.setErase(false);
                     brushDialog.dismiss();
                 }
             });
             brushDialog.show();
         }
-
+        else if(v.getId()==R.id.erase_btn){
+            //switch to erase - choose size
+            final Dialog brushDialog = new Dialog(context);
+            brushDialog.setTitle("Eraser size:");
+            brushDialog.setContentView(R.layout.size_chooser);
+            ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
+            smallBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawView.setErase(true);
+                    drawView.setBrushSize(smallBrush);
+                    brushDialog.dismiss();
+                }
+            });
+            ImageButton mediumBtn = (ImageButton)brushDialog.findViewById(R.id.medium_brush);
+            mediumBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawView.setErase(true);
+                    drawView.setBrushSize(mediumBrush);
+                    brushDialog.dismiss();
+                }
+            });
+            ImageButton largeBtn = (ImageButton)brushDialog.findViewById(R.id.large_brush);
+            largeBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawView.setErase(true);
+                    drawView.setBrushSize(largeBrush);
+                    brushDialog.dismiss();
+                }
+            });
+            brushDialog.show();
+        }
     }
 }
