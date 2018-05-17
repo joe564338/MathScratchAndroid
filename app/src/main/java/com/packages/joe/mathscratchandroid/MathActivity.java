@@ -8,7 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+
 
 public class MathActivity extends FragmentActivity implements ScratchFragment.OnFragmentInteractionListener, MathFragment.OnFragmentInteractionListener{
     FragmentTransaction transaction;
@@ -24,8 +25,8 @@ public class MathActivity extends FragmentActivity implements ScratchFragment.On
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int screenWidth = displaymetrics.widthPixels;
         int screenHeight = displaymetrics.heightPixels;
-        leftContainer.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth*2/5, screenHeight));
-        rightContainer.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth*3/5, screenHeight));
+        leftContainer.setLayoutParams(new LinearLayout.LayoutParams(screenWidth*2/5, screenHeight - 50));
+        rightContainer.setLayoutParams(new LinearLayout.LayoutParams(screenWidth*3/5, screenHeight - 50));
         ScratchFragment scratchFragment = new ScratchFragment();
         MathFragment mathFragment = new MathFragment();
         FragmentManager manager=getSupportFragmentManager();

@@ -10,7 +10,13 @@ import android.view.ViewGroup;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
+import java.util.UUID;
+import android.provider.MediaStore;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
 import com.packages.joe.mathscratchandroid.view.DrawingView;
 
 
@@ -24,14 +30,14 @@ import com.packages.joe.mathscratchandroid.view.DrawingView;
  */
 /**
  * Drawing from https://code.tutsplus.com/tutorials/android-sdk-create-a-drawing-app-essential-functionality--mobile-19328*/
-public class ScratchFragment extends Fragment {
+public class ScratchFragment extends Fragment implements OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private float smallBrush, mediumBrush, largeBrush;
     private DrawingView drawView;
-    private ImageButton currPaint;
+    private ImageButton currPaint, drawBtn;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -123,6 +129,9 @@ public class ScratchFragment extends Fragment {
         LinearLayout paintLayout = (LinearLayout) view.findViewById(R.id.paint_colors);
         currPaint = (ImageButton)paintLayout.getChildAt(0);
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
+        smallBrush = getResources().getInteger(R.integer.small_size) - 5;
+        mediumBrush = getResources().getInteger(R.integer.medium_size) - 10;
+        largeBrush = getResources().getInteger(R.integer.large_size) - 10;
         paint0 = (ImageButton) view.findViewById(R.id.paint0);
         paint0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,6 +216,10 @@ public class ScratchFragment extends Fragment {
                 paintClicked(v);
             }
         });
+        drawBtn = (ImageButton) view.findViewById(R.id.draw_btn);
+        drawBtn.setOnClickListener(this);
+
+
     }
     public void paintClicked(View view){
         if(view!=currPaint){
@@ -218,5 +231,46 @@ public class ScratchFragment extends Fragment {
             currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
             currPaint=(ImageButton)view;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        final Context context = getContext();
+        if(v.getId()==R.id.draw_btn){
+            //draw button clicked
+            final Dialog brushDialog = new Dialog(context);
+            brushDialog.setTitle("Tip Size");
+            brushDialog.setContentView(R.layout.size_chooser);
+            ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
+            smallBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawView.setBrushSize(smallBrush);
+                    drawView.setLastBrushSize(smallBrush);
+                    brushDialog.dismiss();
+                }
+            });
+            ImageButton mediumBtn = (ImageButton)brushDialog.findViewById(R.id.medium_brush);
+            mediumBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawView.setBrushSize(mediumBrush);
+                    drawView.setLastBrushSize(mediumBrush);
+                    brushDialog.dismiss();
+                }
+            });
+
+            ImageButton largeBtn = (ImageButton)brushDialog.findViewById(R.id.large_brush);
+            largeBtn.setOnClickListener(new OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    drawView.setBrushSize(largeBrush);
+                    drawView.setLastBrushSize(largeBrush);
+                    brushDialog.dismiss();
+                }
+            });
+            brushDialog.show();
+        }
+
     }
 }
