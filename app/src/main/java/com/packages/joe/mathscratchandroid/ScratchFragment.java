@@ -220,6 +220,8 @@ public class ScratchFragment extends Fragment implements OnClickListener {
         drawBtn.setOnClickListener(this);
         eraseBtn = (ImageButton) view.findViewById(R.id.erase_btn);
         eraseBtn.setOnClickListener(this);
+        newBtn = (ImageButton) view.findViewById(R.id.new_btn);
+        newBtn.setOnClickListener(this);
 
     }
     public void paintClicked(View view){
@@ -310,6 +312,24 @@ public class ScratchFragment extends Fragment implements OnClickListener {
                 }
             });
             brushDialog.show();
+        }
+        else if(v.getId()==R.id.new_btn){
+            //new button
+            AlertDialog.Builder newDialog = new AlertDialog.Builder(context);
+            newDialog.setTitle("New drawing");
+            newDialog.setMessage("Clear Scratch Page? (You cannot get it back)");
+            newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    drawView.startNew();
+                    dialog.dismiss();
+                }
+            });
+            newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.cancel();
+                }
+            });
+            newDialog.show();
         }
     }
 }
