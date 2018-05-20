@@ -3,10 +3,17 @@ package com.packages.joe.mathscratchandroid;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.packages.joe.mathscratchandroid.equation.Equation;
+import com.packages.joe.mathscratchandroid.threads.PopulateListThread;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,7 +33,7 @@ public class MathFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    ListView listView;
     private OnFragmentInteractionListener mListener;
 
     public MathFragment() {
@@ -106,4 +113,17 @@ public class MathFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Equation e = new Equation(Equation.Difficulty.EASY, 2, false);
+        listView = (ListView) view.findViewById(R.id.mathQuestions);
+        ArrayList<Equation> equations = new ArrayList<Equation>();
+        equations.add(e);
+        for(int i = 0; i < 20; i++){
+            equations.add(new Equation(Equation.Difficulty.EASY, 2, false));
+        }
+        PopulateListThread populateListThread = new PopulateListThread(equations, getContext(), listView);
+        populateListThread.run();
+    }
 }
