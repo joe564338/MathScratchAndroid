@@ -23,6 +23,24 @@ public class Equation {
             return n;
         }
     }
+    boolean correct;
+    boolean wrong;
+
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    public boolean isWrong() {
+        return wrong;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    public void setWrong(boolean wrong) {
+        this.wrong = wrong;
+    }
 
     public String getEquation() {
         return equation;
@@ -31,6 +49,8 @@ public class Equation {
     Difficulty difficulty;
     Random random;
     public Equation(Difficulty difficulty, int operands, boolean complex){
+        correct = false;
+        wrong = false;
         this.difficulty = difficulty;
         random = new SecureRandom();
         this.complex = complex;
@@ -45,7 +65,7 @@ public class Equation {
             for(int i = 0; i < operands; i++){
                 System.out.println(operand);
                 if(operatorType == 1 && i > 0){
-                    operand = random.nextInt(operand);
+                    operand = random.nextInt(operand+1);
                 }
                 else {
                     operand = random.nextInt(99);

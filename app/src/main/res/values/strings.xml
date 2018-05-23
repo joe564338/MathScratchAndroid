@@ -13,4 +13,6 @@
     <string name="lrg">Large</string>
     <string name="difficulty">Difficulty: </string>
     <string name="equation">equation</string>
+    <string name="answer">Answer: </string>
+    <string name="sorry_try_again">Sorry Try Again</string>
 </resources>

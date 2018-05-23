@@ -1,16 +1,19 @@
 package com.packages.joe.mathscratchandroid.adapter;
 
 import android.content.Context;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.packages.joe.mathscratchandroid.R;
 import com.packages.joe.mathscratchandroid.equation.Equation;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class EquationAdapter extends BaseAdapter {
@@ -42,8 +45,49 @@ public class EquationAdapter extends BaseAdapter {
         View rowView = inflater.inflate(R.layout.math_equation, parent, false);
         TextView equationText = (TextView) rowView.findViewById(R.id.equation);
         ImageView difficultyImage = (ImageView) rowView.findViewById(R.id.difficultyImage);
-        Equation equation = (Equation) getItem(position);
+        final Equation equation = (Equation) getItem(position);
         equationText.setText(equation.getEquation());
+        final TextView sorry = (TextView) rowView.findViewById(R.id.wrongAnswer);
+        final EditText answer = (EditText) rowView.findViewById(R.id.answer);
+        final ImageView check = (ImageView) rowView.findViewById(R.id.checkMark);
+        if(equation.isCorrect()) check.setVisibility(View.VISIBLE);
+        else check.setVisibility(View.INVISIBLE);
+        if (equation.isWrong()) sorry.setVisibility(View.VISIBLE);
+        else  sorry.setVisibility(View.INVISIBLE);
+        answer.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                try {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        double d = Double.parseDouble(answer.getText().toString());
+                        System.out.println(equation.getAnswer());
+                        try {
+                            if (!answer.getText().toString().matches("-?\\d+(\\.\\d+)?"))
+                                return true;
+                            if (equation.getAnswer().compareTo(BigDecimal.valueOf(d)) == 0) {
+                                check.setVisibility(View.VISIBLE);
+                                answer.setFocusable(false);
+                                sorry.setVisibility(View.INVISIBLE);
+                                equation.setCorrect(true);
+                                equation.setWrong(false);
+                                return true;
+                            } else {
+                                sorry.setVisibility(View.VISIBLE);
+                                equation.setWrong(true);
+                                equation.setCorrect(false);
+                                return true;
+                            }
+                        } catch (NumberFormatException e) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } catch (NumberFormatException e) {
+                    return true;
+                }
+            }
+        });
         if(equation.getDifficulty() == Equation.Difficulty.EASY){
             //get image for easy
         }

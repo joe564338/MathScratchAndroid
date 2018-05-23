@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topHalf">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tooltipText="@string/difficulty"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:id="@+id/difficultyImage"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/equation"
+            android:text="@string/equation"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/topHalf">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/answer"
+            android:textSize="30dp"/>
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/answer"
+            android:textSize="30dp"
+            android:inputType="number"/>
+
+    </LinearLayout>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tooltipText="@string/difficulty"
-        android:maxWidth="40dp"
-        android:maxHeight="40dp"
-        android:id="@+id/difficultyImage"/>
+        android:id="@+id/checkMark"
+        android:src="@drawable/check"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
+        android:visibility="invisible"
+        android:adjustViewBounds="true"
+        android:layout_toEndOf="@+id/topHalf"
+        android:layout_marginStart="200dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:id="@+id/equation"
-        android:text="@string/equation"/>
-
-</LinearLayout>
+        android:id="@+id/wrongAnswer"
+        android:visibility="invisible"
+        android:text="@string/sorry_try_again"
+        android:textColor="#FF0000"
+        android:layout_toEndOf="@+id/topHalf"
+        android:textSize="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="150dp"/>
+</RelativeLayout>
