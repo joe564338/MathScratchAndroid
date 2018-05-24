@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         img.setMaxWidth(screenWidth/4);
         begin = (Button) findViewById(R.id.startButton);
         final Intent intent = new Intent(this, MathActivity.class);
+        //final Intent intent2 = new Intent(this, SetUpDrive.class);
         begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

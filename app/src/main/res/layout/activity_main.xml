@@ -13,13 +13,29 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/title_art_better" />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleArt"
+        android:id="@+id/centerDivider"
+        android:layout_centerHorizontal="true"/>
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleArt"
-        android:layout_centerHorizontal="true"
-        android:text="@string/start_button" />
+        android:layout_toStartOf="@+id/centerDivider"
+        android:text="@string/new_sheet"
+        android:layout_marginEnd="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleArt"
+        android:id="@+id/load"
+        android:layout_toEndOf="@+id/centerDivider"
+        android:layout_marginStart="10dp"
+
+
+        android:text="@string/load_sheet"/>
 
 </RelativeLayout>

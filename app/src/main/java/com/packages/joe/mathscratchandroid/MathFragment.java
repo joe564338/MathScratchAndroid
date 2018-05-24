@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.android.gms.drive.DriveClient;
 import com.packages.joe.mathscratchandroid.equation.Equation;
 import com.packages.joe.mathscratchandroid.threads.PopulateListThread;
 
@@ -34,6 +35,7 @@ public class MathFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ListView listView;
+    private DriveClient mDriveClient;
     private OnFragmentInteractionListener mListener;
 
     public MathFragment() {

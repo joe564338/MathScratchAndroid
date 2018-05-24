@@ -41,6 +41,15 @@ public class Equation {
     public void setWrong(boolean wrong) {
         this.wrong = wrong;
     }
+    String guessedAnswer = "";
+
+    public void setGuessedAnswer(String guessedAnswer) {
+        this.guessedAnswer = guessedAnswer;
+    }
+
+    public String getGuessedAnswer() {
+        return guessedAnswer;
+    }
 
     public String getEquation() {
         return equation;

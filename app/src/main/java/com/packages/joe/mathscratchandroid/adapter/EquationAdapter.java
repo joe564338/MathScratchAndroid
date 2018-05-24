@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.packages.joe.mathscratchandroid.R;
 import com.packages.joe.mathscratchandroid.equation.Equation;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -71,6 +73,32 @@ public class EquationAdapter extends BaseAdapter {
                                 sorry.setVisibility(View.INVISIBLE);
                                 equation.setCorrect(true);
                                 equation.setWrong(false);
+                                equation.setGuessedAnswer(answer.getText().toString());
+
+                                File file = context.getFilesDir();
+                                File[] files = file.listFiles();
+                                int sheetNum = 1;
+                                for (File f: files) {
+                                    if(f.getName().contains("MathScratch")){
+                                        sheetNum++;
+                                    }
+                                }
+                                String filename = "MathScratch" + Integer.toString(sheetNum);
+                                String fileContents = "";
+                                int i = 1;
+                                for (Equation e: items) {
+                                    fileContents += "<Equation "  + Integer.toString(i) +">\n";
+                                    fileContents += e.getEquation() + " = " + e.getGuessedAnswer() + " \n";
+                                }
+                                FileOutputStream outputStream;
+
+                                try {
+                                    outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+                                    outputStream.write(fileContents.getBytes());
+                                    outputStream.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 return true;
                             } else {
                                 sorry.setVisibility(View.VISIBLE);

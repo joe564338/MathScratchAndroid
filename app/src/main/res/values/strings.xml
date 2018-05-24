@@ -15,4 +15,11 @@
     <string name="equation">equation</string>
     <string name="answer">Answer: </string>
     <string name="sorry_try_again">Sorry Try Again</string>
+    <string name="new_sheet">New Sheet</string>
+    <string name="load_sheet">Load Sheet</string>
+    <string name="addition_subtraction_practice">Addition/Subtraction Practice</string>
+    <string name="multiplication_practice">Multiplication Practice</string>
+    <string name="multiplication_table_practice">Multiplication Table Practice</string>
+    <string name="difficulty_easy">Cupcake</string>
+    <string name="difficulty_hard">Tough Cookie</string>
 </resources>
