@@ -8,13 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topHalf">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tooltipText="@string/difficulty"
-            android:maxWidth="40dp"
-            android:maxHeight="40dp"
-            android:id="@+id/difficultyImage"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

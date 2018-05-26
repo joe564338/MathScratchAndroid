@@ -10,12 +10,61 @@
         android:layout_height="wrap_content"
         android:id="@+id/centerDivider2"
         android:layout_centerInParent="true"/>
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/centerDivider2"
+        android:layout_alignBottom="@+id/centerDivider2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:text="@string/addition_subtraction_practice" />
+            android:id="@+id/addSubPractice"
+            android:text="@string/addition_subtraction_practice"
+            android:layout_marginEnd="5dp"/>
+        <Button
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/multiplication_practice"
+            android:id="@+id/multPractice"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/difficulty"
+        android:id="@+id/difficultyText"
+        android:layout_below="@+id/centerDivider2"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/difficultyText"
+        android:id="@+id/difficultyLevel"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/cupcake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/difficulty_easy" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/difficulty_hard"
+                android:id="@+id/tough"/>
+        </LinearLayout>
+    </RadioGroup>
     
 
 </RelativeLayout>

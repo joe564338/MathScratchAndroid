@@ -24,9 +24,17 @@
         <activity
             android:name=".MathActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".SetUpDrive" android:screenOrientation="landscape"/>
-        <activity android:name=".CreateNewMathActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".LoadMathActivity" android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".SetUpDrive"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".CreateNewMathActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".LoadMathActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".DecideMultiple"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

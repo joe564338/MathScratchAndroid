@@ -1,6 +1,7 @@
 package com.packages.joe.mathscratchandroid;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -114,18 +115,34 @@ public class MathFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
+    SharedPreferences preferences;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Equation e = new Equation(Equation.Difficulty.EASY, 2, false);
+        preferences = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
         listView = (ListView) view.findViewById(R.id.mathQuestions);
         ArrayList<Equation> equations = new ArrayList<Equation>();
-        equations.add(e);
-        for(int i = 0; i < 20; i++){
-            equations.add(new Equation(Equation.Difficulty.EASY, 2, false));
+        if(preferences.getString("SheetType", "ADDSUB").equals("ADDSUB")&& preferences.getString("Difficulty", "EASY").equals("EASY")){
+            for(int i = 0; i < 20; i++){
+                equations.add(new Equation(Equation.Difficulty.EASY, 2, false));
+            }
+        } else if(preferences.getString("SheetType", "ADDSUB").equals("ADDSUB") && preferences.getString("Difficulty", "EASY").equals("HARD")){
+            for(int i = 0; i < 20; i++){
+                equations.add(new Equation(Equation.Difficulty.HARD, 2, false));
+            }
+        } else if(preferences.getString("SheetType", "ADDSUB").equals("MULT")){
+            System.out.println("MULT");
+            for(int i = 0; i < 12; i++){
+                System.out.println("Mult" + i);
+                Equation e = new Equation(true, preferences.getInt("Multiple", 0), i+1);
+                equations.add(e);
+            }
+        } else {
+            System.out.println("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
+
         PopulateListThread populateListThread = new PopulateListThread(equations, getContext(), listView);
         populateListThread.run();
     }
+
 }

@@ -46,11 +46,12 @@ public class EquationAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = inflater.inflate(R.layout.math_equation, parent, false);
         TextView equationText = (TextView) rowView.findViewById(R.id.equation);
-        ImageView difficultyImage = (ImageView) rowView.findViewById(R.id.difficultyImage);
+
         final Equation equation = (Equation) getItem(position);
         equationText.setText(equation.getEquation());
         final TextView sorry = (TextView) rowView.findViewById(R.id.wrongAnswer);
         final EditText answer = (EditText) rowView.findViewById(R.id.answer);
+        answer.setText(equation.getGuessedAnswer());
         final ImageView check = (ImageView) rowView.findViewById(R.id.checkMark);
         if(equation.isCorrect()) check.setVisibility(View.VISIBLE);
         else check.setVisibility(View.INVISIBLE);
@@ -83,12 +84,14 @@ public class EquationAdapter extends BaseAdapter {
                                         sheetNum++;
                                     }
                                 }
-                                String filename = "MathScratch" + Integer.toString(sheetNum);
+                                String filename = "MathScratch" + Integer.toString(sheetNum)+".txt";
                                 String fileContents = "";
                                 int i = 1;
                                 for (Equation e: items) {
+
                                     fileContents += "<Equation "  + Integer.toString(i) +">\n";
                                     fileContents += e.getEquation() + " = " + e.getGuessedAnswer() + " \n";
+                                    i++;
                                 }
                                 FileOutputStream outputStream;
 
@@ -103,6 +106,7 @@ public class EquationAdapter extends BaseAdapter {
                             } else {
                                 sorry.setVisibility(View.VISIBLE);
                                 equation.setWrong(true);
+                                equation.setGuessedAnswer(answer.getText().toString());
                                 equation.setCorrect(false);
                                 return true;
                             }
