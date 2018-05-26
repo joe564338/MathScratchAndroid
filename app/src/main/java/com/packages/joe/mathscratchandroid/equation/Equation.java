@@ -143,4 +143,19 @@ public class Equation {
     public BigDecimal getAnswer() {
         return answer;
     }
+    public Equation(String equation, String guessedAnswer){
+        this.equation = equation;
+        this.guessedAnswer = guessedAnswer;
+        answer = new Expression(equation).eval();
+        try {
+            int guess = Integer.parseInt(guessedAnswer);
+            if (BigDecimal.valueOf(guess).equals(answer)) {
+                setCorrect(true);
+            } else {
+                setWrong(true);
+            }
+        } catch (NumberFormatException e){
+
+        }
+    }
 }

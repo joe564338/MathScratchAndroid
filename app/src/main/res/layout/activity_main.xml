@@ -37,5 +37,22 @@
 
 
         android:text="@string/load_sheet"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/patreon_link"
+        android:id="@+id/patreonLink"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mathFact"
+        android:text="@string/math_fact_1"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/patreonLink"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp"/>
 
 </RelativeLayout>

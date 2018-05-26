@@ -22,5 +22,6 @@
     <string name="multiplication_table_practice">Multiplication Table Practice</string>
     <string name="difficulty_easy">Cupcake</string>
     <string name="difficulty_hard">Tough Cookie</string>
-
+    <string name="patreon_link"><a href="https://www.patreon.com/joemccully">My patreon: https://www.patreon.com/joemccully</a></string>
+    <string name="math_fact_1">A googol is 10 to the power of 100</string>
 </resources>

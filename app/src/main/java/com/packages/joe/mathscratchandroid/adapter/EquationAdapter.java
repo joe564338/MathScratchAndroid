@@ -1,6 +1,7 @@
 package com.packages.joe.mathscratchandroid.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,7 @@ public class EquationAdapter extends BaseAdapter {
         else check.setVisibility(View.INVISIBLE);
         if (equation.isWrong()) sorry.setVisibility(View.VISIBLE);
         else  sorry.setVisibility(View.INVISIBLE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         answer.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -76,15 +78,8 @@ public class EquationAdapter extends BaseAdapter {
                                 equation.setWrong(false);
                                 equation.setGuessedAnswer(answer.getText().toString());
 
-                                File file = context.getFilesDir();
-                                File[] files = file.listFiles();
-                                int sheetNum = 1;
-                                for (File f: files) {
-                                    if(f.getName().contains("MathScratch")){
-                                        sheetNum++;
-                                    }
-                                }
-                                String filename = "MathScratch" + Integer.toString(sheetNum)+".txt";
+
+                                String filename = sharedPreferences.getString("FileName", "NONE");
                                 String fileContents = "";
                                 int i = 1;
                                 for (Equation e: items) {
@@ -120,9 +115,7 @@ public class EquationAdapter extends BaseAdapter {
                 }
             }
         });
-        if(equation.getDifficulty() == Equation.Difficulty.EASY){
-            //get image for easy
-        }
+
         return rowView;
     }
 }

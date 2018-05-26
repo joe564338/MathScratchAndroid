@@ -1,6 +1,7 @@
 package com.packages.joe.mathscratchandroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import com.google.android.gms.drive.DriveClient;
 import com.packages.joe.mathscratchandroid.equation.Equation;
 import com.packages.joe.mathscratchandroid.threads.PopulateListThread;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -122,25 +127,92 @@ public class MathFragment extends Fragment {
         preferences = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
         listView = (ListView) view.findViewById(R.id.mathQuestions);
         ArrayList<Equation> equations = new ArrayList<Equation>();
-        if(preferences.getString("SheetType", "ADDSUB").equals("ADDSUB")&& preferences.getString("Difficulty", "EASY").equals("EASY")){
-            for(int i = 0; i < 20; i++){
-                equations.add(new Equation(Equation.Difficulty.EASY, 2, false));
+        if(preferences.getString("File", "NONE").equals("NONE")) {
+            if (preferences.getString("SheetType", "ADDSUB").equals("ADDSUB") && preferences.getString("Difficulty", "EASY").equals("EASY")) {
+                for (int i = 0; i < 20; i++) {
+                    equations.add(new Equation(Equation.Difficulty.EASY, 2, false));
+                }
+            } else if (preferences.getString("SheetType", "ADDSUB").equals("ADDSUB") && preferences.getString("Difficulty", "EASY").equals("HARD")) {
+                for (int i = 0; i < 20; i++) {
+                    equations.add(new Equation(Equation.Difficulty.HARD, 2, false));
+                }
+            } else if (preferences.getString("SheetType", "ADDSUB").equals("MULT")) {
+                System.out.println("MULT");
+                for (int i = 0; i < 12; i++) {
+                    System.out.println("Mult" + i);
+                    Equation e = new Equation(true, preferences.getInt("Multiple", 0), i + 1);
+                    equations.add(e);
+                }
+            } else {
+                System.out.println("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
-        } else if(preferences.getString("SheetType", "ADDSUB").equals("ADDSUB") && preferences.getString("Difficulty", "EASY").equals("HARD")){
-            for(int i = 0; i < 20; i++){
-                equations.add(new Equation(Equation.Difficulty.HARD, 2, false));
-            }
-        } else if(preferences.getString("SheetType", "ADDSUB").equals("MULT")){
-            System.out.println("MULT");
-            for(int i = 0; i < 12; i++){
-                System.out.println("Mult" + i);
-                Equation e = new Equation(true, preferences.getInt("Multiple", 0), i+1);
-                equations.add(e);
-            }
-        } else {
-            System.out.println("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
+        } else{
+            BufferedReader br = null;
+            FileReader fr = null;
 
+            try {
+
+                String fileName = preferences.getString("File", "NONE");
+                File file = getActivity().getFilesDir();
+                File[] files = file.listFiles();
+                File fileToLoad = null;
+                for (File f: files) {
+                    if(f.getName().equals(fileName)){
+                        fileToLoad = f;
+                    }
+                }
+                fr = new FileReader(fileToLoad);
+                br = new BufferedReader(fr);
+
+                String sCurrentLine;
+
+                while ((sCurrentLine = br.readLine()) != null) {
+                    if(sCurrentLine.contains("Equation")){
+                        sCurrentLine = br.readLine();
+                        String[] parts = sCurrentLine.split("=");
+                        for(int i = 0; i < parts.length; i++){
+                            System.out.println(parts[i]);
+                            parts[i].replaceAll("=", "");
+                        }
+                        String equation = parts[0];
+                        String guessedAnswer = "";
+
+                        try{
+                            parts[1] = parts[1].replaceAll("\\s+", "");
+                            System.out.println(parts[1]);
+                            guessedAnswer = Integer.toString(Integer.parseInt(parts[1]));
+                        } catch (Exception e){
+                            System.out.println("NO ANSWER");
+                            guessedAnswer = "";
+                        }
+
+                        Equation e = new Equation(equation, guessedAnswer);
+                        equations.add(e);
+                    }
+                }
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            } finally {
+
+                try {
+
+                    if (br != null)
+                        br.close();
+
+                    if (fr != null)
+                        fr.close();
+
+                } catch (IOException ex) {
+
+                    ex.printStackTrace();
+
+                }
+
+            }
+        }
         PopulateListThread populateListThread = new PopulateListThread(equations, getContext(), listView);
         populateListThread.run();
     }

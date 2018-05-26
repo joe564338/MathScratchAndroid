@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
+import java.io.File;
+
 public class CreateNewMathActivity extends AppCompatActivity {
     Button addSub;
     Button mult;
@@ -22,6 +24,15 @@ public class CreateNewMathActivity extends AppCompatActivity {
         init();
     }
     private void init(){
+        File file = getFilesDir();
+        File[] files = file.listFiles();
+        int sheetNum = 1;
+        for (File f: files) {
+            if(f.getName().contains("MathScratch")){
+                sheetNum++;
+            }
+        }
+        String filename = "MathScratch" + Integer.toString(sheetNum)+".txt";
         preferences = getSharedPreferences("Settings", MODE_PRIVATE);
         preferencesEditor = preferences.edit();
         preferencesEditor.putString("Difficulty", "EASY");
@@ -53,6 +64,8 @@ public class CreateNewMathActivity extends AppCompatActivity {
             public void onClick(View v) {
                 preferencesEditor.putString("SheetType" , "ADDSUB");
                 preferencesEditor.commit();
+                preferencesEditor.putString("FileName", filename);
+                preferencesEditor.commit();
                 startActivity(intent);
             }
         });
@@ -61,6 +74,8 @@ public class CreateNewMathActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 preferencesEditor.putString("SheetType", "MULT");
+                preferencesEditor.commit();
+                preferencesEditor.putString("FileName", filename);
                 preferencesEditor.commit();
                 startActivity(intent2);
             }
